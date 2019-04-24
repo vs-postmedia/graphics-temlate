@@ -1,6 +1,6 @@
 console.log('hello, world');
 
-import css from './style/main.css';
+import css from './css/main.css';
 
 import * as d3 from 'd3';
 const square = d3.selectAll('rect');
