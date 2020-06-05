@@ -18,6 +18,7 @@ module.exports = {
 		// Serves everything from our dist folder which is our output folder
 		contentBase: path.resolve(ROOT_DIR, 'dist'),
 		// This will shows a full-screen overlay in the browser when there are compiler errors
+		host: '0.0.0.0',
 		overlay: true,
 		port: 3000
 	},
