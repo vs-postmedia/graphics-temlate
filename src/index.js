@@ -5,6 +5,13 @@ import fonts from './css/fonts.css';
 import css from './css/main.css';
 
 // JS
+// import axios from 'axios';
 import test from './js/test.js'
+import config from './data/config.json';
 
-console.log('hello, world');
+const init = async () => {
+	
+	console.log('hello, world');
+};
+
+init();
