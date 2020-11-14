@@ -6,12 +6,14 @@ import css from './css/main.css';
 
 // JS
 // import axios from 'axios';
-import test from './js/test.js'
+import test from './js/test.js';
 import config from './data/config.json';
 
 const init = async () => {
 	
 	console.log('hello, world');
+
+	test.init();
 };
 
 init();
