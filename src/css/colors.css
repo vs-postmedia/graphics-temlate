@@ -74,3 +74,21 @@
 	--libertarian: #F8C052;
 	--bloc: #54A8DF;
 }
+
+/* COLOUR SHORTCUTS */
+.black {
+	color: var(--black);
+	font-family: BentonSansCond-Bold;
+}
+.blue {
+	color: var(--blue01);
+	font-family: BentonSansCond-Bold;
+}
+.green {
+	color: var(--green01);
+	font-family: BentonSansCond-Bold;
+}
+.purple {
+	color: var(--brite_purple01);
+	font-family: BentonSansCond-Bold;
+}
