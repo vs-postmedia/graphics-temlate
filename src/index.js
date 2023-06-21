@@ -5,9 +5,7 @@ import fonts from './css/fonts.css';
 import css from './css/main.css';
 
 // JS
-// import axios from 'axios';
 import test from './js/test.js';
-import config from './data/config.json';
 
 const init = async () => {
 	

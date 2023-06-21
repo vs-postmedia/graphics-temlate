@@ -53,40 +53,6 @@ module.exports = {
 				  	"postcss-loader",
 				],
 			},
-			// {
-			//  	test: /\.module\.css$/,
-			//  	use: [
-			//  		'style-loader',
-			//  		{
-			//  			loader: 'css-loader',
-			//  			options: {
-			//  				url: true,
-			//  				import: true,
-			// 				importLoaders: 1,
-			//  				modules: {
-			//  					// Convention name of generated CSS Modules classname
-			//  					localIdentName: '[name]__[local]--[contenthash:8]',
-			//  				}
-			//  			}
-			//  		},
-					// 'postcss-loader',
-			 		// {
-					// 	loader: 'postcss-loader',
-					// 	options: {
-					// 		ident: 'postcss',
-					// 		/**
-					// 			* Note: You can also put your postcss config here
-					// 			* Instead of make a new file just like we do here
-					// 			* Docs: https://github.com/postcss/postcss-loader#config
-					// 		*/
-					// 		config: {
-					// 			// tell postcss-loader where to find config file
-					// 			path: path.resolve(ROOT_DIR, 'config')
-					// 		}
-					// 	}
-					// }
-			//  	]
-			// },
 			// js/jsx (es6 friendly)
 			{
 				test: /\.(js|jsx)$/,

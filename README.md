@@ -1,2 +1,2 @@
 # graphics-template
-Basic template to bootstrap interactive graphics. Includes d3. Made with Webpack & node.
+Basic template to bootstrap interactive graphics. Made with Webpack & node.
