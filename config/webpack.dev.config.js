@@ -4,9 +4,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-
-// Tweak this to match your GitHub project name
-const publicPath = 'covid-active-cases/';
 // process.cwd will return a path to our active project directory
 const ROOT_DIR = process.cwd();
 
@@ -16,94 +13,80 @@ module.exports = {
 		// Enable gzip compression
 		compress: true,
 		// Serves everything from our dist folder which is our output folder
-		contentBase: path.resolve(ROOT_DIR, 'dist'),
+		// contentBase: path.resolve(ROOT_DIR, 'dist'),
 		// This will shows a full-screen overlay in the browser when there are compiler errors
 		host: '0.0.0.0',
-		overlay: true,
-		port: 3000
+		// overlay: true,
+		port: 3000,
+		static: {
+			// Serves everything from our dist folder which is our output folder
+			directory: path.resolve(ROOT_DIR, 'dist'),
+		}
 	},
 	// Development Tools (Map Errors To Source File)
   	devtool: 'source-map',
   	// source
-	entry: { 
-		main: path.resolve(ROOT_DIR, 'src/index.js')
-	},
+	// entry: { 
+	// 	main: path.resolve(ROOT_DIR, 'src/index.js')
+	// },
+	entry: path.resolve(ROOT_DIR, 'src/index.js'),
 	mode: 'development',
 	output: {
 		path: path.resolve(ROOT_DIR, 'dist'),
 		filename: '[name].bundle.js',
 		chunkFilename: '[name].chunk.js'
-		// Tweak this to match your GitHub project name
-      	// publicPath: publicPath
 	},
 	module: {
 		rules: [
 			// CSS
 			{
-				test: /\.css$/,
-				exclude: /\.module\.css$/,
+				test: /\.css$/i,
 				use: [
-					'style-loader', 
-					{ 
-						loader: 'css-loader', 
+					"style-loader",
+				  	{
+						loader: "css-loader",
 						options: {
-							// Enable url functions handling in css
-							url: true,
-							// Enables @import at-rules handling
-							import: true,
-							// Disable css modules
-							modules: false
-						}
-					},
-					{
-						loader: 'postcss-loader',
-						options: {
-							ident: 'postcss',
-							/**
-								* Note: You can also put your postcss config here
-								* Instead of make a new file just like we do here
-								* Docs: https://github.com/postcss/postcss-loader#config
-							*/
-							config: {
-								// tell postcss-loader where to find config file
-								path: path.resolve(ROOT_DIR, 'config')
-							}
-						}
-					}
-				]
+					  		modules: true,
+					  		importLoaders: 1,
+						},
+				  	},
+				  	"postcss-loader",
+				],
 			},
-			{
-			 	test: /\.module\.css$/,
-			 	use: [
-			 		'style-loader',
-			 		{
-			 			loader: 'css-loader',
-			 			options: {
-			 				url: true,
-			 				import: true,
-			 				modules: {
-			 					// Convention name of generated CSS Modules classname
-			 					localIdentName: '[name]__[local]--[contenthash:8]',
-			 				}
-			 			}
-			 		},
-			 		{
-						loader: 'postcss-loader',
-						options: {
-							ident: 'postcss',
-							/**
-								* Note: You can also put your postcss config here
-								* Instead of make a new file just like we do here
-								* Docs: https://github.com/postcss/postcss-loader#config
-							*/
-							config: {
-								// tell postcss-loader where to find config file
-								path: path.resolve(ROOT_DIR, 'config')
-							}
-						}
-					}
-			 	]
-			},
+			// {
+			//  	test: /\.module\.css$/,
+			//  	use: [
+			//  		'style-loader',
+			//  		{
+			//  			loader: 'css-loader',
+			//  			options: {
+			//  				url: true,
+			//  				import: true,
+			// 				importLoaders: 1,
+			//  				modules: {
+			//  					// Convention name of generated CSS Modules classname
+			//  					localIdentName: '[name]__[local]--[contenthash:8]',
+			//  				}
+			//  			}
+			//  		},
+					// 'postcss-loader',
+			 		// {
+					// 	loader: 'postcss-loader',
+					// 	options: {
+					// 		ident: 'postcss',
+					// 		/**
+					// 			* Note: You can also put your postcss config here
+					// 			* Instead of make a new file just like we do here
+					// 			* Docs: https://github.com/postcss/postcss-loader#config
+					// 		*/
+					// 		config: {
+					// 			// tell postcss-loader where to find config file
+					// 			path: path.resolve(ROOT_DIR, 'config')
+					// 		}
+					// 	}
+					// }
+			//  	]
+			// },
 			// js/jsx (es6 friendly)
 			{
 				test: /\.(js|jsx)$/,

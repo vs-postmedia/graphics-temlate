@@ -3,11 +3,11 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const safePostCssParser = require('postcss-safe-parser');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const safePostCssParser = require('postcss-safe-parser');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 
 // process.cwd will return a path to our active project directory
@@ -17,9 +17,7 @@ const ROOT_DIR = process.cwd();
 module.exports = {
 	mode: 'production',
   	// source
-	entry: { 
-		main: path.resolve(ROOT_DIR, 'src/index.js')
-	},
+	entry: path.resolve(ROOT_DIR, 'src/index.js'),
 	output: {
 		path: path.resolve(ROOT_DIR, 'dist'),
 		// add hashing for better caching
@@ -32,69 +30,18 @@ module.exports = {
 		rules: [
 			// CSS
 			{
-				test: /\.css$/,
-				exclude: /\.module\.css$/,
+				test: /\.css$/i,
 				use: [
-					MiniCssExtractPlugin.loader,
-					{ 
-						loader: 'css-loader', 
+					"style-loader",
+				  	{
+						loader: "css-loader",
 						options: {
-							// Enable url functions handling in css
-							url: true,
-							// Enables @import at-rules handling
-							import: true,
-							// Disable css modules
-							modules: false
-						}
-					},
-					{
-						loader: 'postcss-loader',
-						options: {
-							ident: 'postcss',
-							/**
-								* Note: You can also put your postcss config here
-								* Instead of make a new file just like we do here
-								* Docs: https://github.com/postcss/postcss-loader#config
-							*/
-							config: {
-								// tell postcss-loader where to find config file
-								path: path.resolve(ROOT_DIR, 'config')
-							}
-						}
-					}
-				]
-			},
-			{
-			 	test: /\.module\.css$/,
-			 	use: [
-			 		MiniCssExtractPlugin.loader,
-			 		{
-			 			loader: 'css-loader',
-			 			options: {
-			 				url: true,
-			 				import: true,
-			 				modules: {
-			 					// Convention name of generated CSS Modules classname
-			 					localIdentName: '[name]__[local]--[contenthash:8]',
-			 				}
-			 			}
-			 		},
-			 		{
-						loader: 'postcss-loader',
-						options: {
-							ident: 'postcss',
-							/**
-								* Note: You can also put your postcss config here
-								* Instead of make a new file just like we do here
-								* Docs: https://github.com/postcss/postcss-loader#config
-							*/
-							config: {
-								// tell postcss-loader where to find config file
-								path: path.resolve(ROOT_DIR, 'config')
-							}
-						}
-					}
-			 	]
+					  		modules: true,
+					  		importLoaders: 1,
+						},
+				  	},
+				  	"postcss-loader",
+				],
 			},
 			// js/jsx (es6 friendly)
 			{
@@ -155,31 +102,9 @@ module.exports = {
 			// other minimizer plugin
 			/**
 			 * Minify our CSS
-			 * Docs: https://github.com/NMFR/optimize-css-assets-webpack-plugin
+			 * Docs: https://github.com/webpack-contrib/css-minimizer-webpack-plugin
 			 */
-			new OptimizeCSSAssetsPlugin({
-				cssProcessorOptions: {
-					parser: safePostCssParser,
-					map: false,
-				},
-				cssProcessorPluginOptions: {
-					/**
-					 * You can see all the preset option here:
-					 * https://github.com/cssnano/cssnano/tree/master/packages/cssnano-preset-default
-					 */
-					preset: [
-						'default',
-						{
-							discardComments: {
-								removeAll: true,
-							},
-							minifyFontValues: {
-								removeQuotes: false,
-							}
-						}
-					]
-				}
-			})
+			new CssMinimizerPlugin()
 		],
 		/**
 		* Keep the runtime chunk separated to enable long term caching
@@ -202,7 +127,7 @@ module.exports = {
 		new CompressionPlugin({
 			algorithm: 'gzip',
 			compressionOptions: { level: 9 },
-			filename: '[path].gz[query]',
+			filename: '[name]-[path].gz[query]',
 			minRatio: 0.8,
 			test: /\.(js|css|html|svg)$/
 		}),
